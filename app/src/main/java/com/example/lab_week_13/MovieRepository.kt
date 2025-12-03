@@ -35,4 +35,11 @@ class MovieRepository(
             }
         }.flowOn(Dispatchers.IO) // run on background thread
     }
+
+    // Force fetch movies from network and save to database
+    // This is used by WorkManager to update data in background
+    suspend fun fetchMoviesFromNetwork() {
+        val remoteMovies = movieService.getPopularMovies(apiKey).results
+        movieDao.insertMovies(remoteMovies)
+    }
 }
