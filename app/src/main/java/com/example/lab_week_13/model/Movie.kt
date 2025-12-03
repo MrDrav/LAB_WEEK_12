@@ -1,4 +1,4 @@
-package com.example.test_lab_week_12.model
+package com.example.lab_week_13.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -25,4 +25,3 @@ data class Movie(
     @field:Json(name = "vote_count")
     val voteCount: Int = 0
 )
-

@@ -1,4 +1,4 @@
-package com.example.test_lab_week_12
+package com.example.lab_week_13
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.test_lab_week_12.model.Movie
+import com.example.lab_week_13.model.Movie
 
 class MovieAdapter(private val clickListener: MovieClickListener) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -29,8 +29,9 @@ class MovieAdapter(private val clickListener: MovieClickListener) :
     }
 
     fun addMovies(movieList: List<Movie>) {
+        movies.clear()
         movies.addAll(movieList)
-        notifyItemRangeInserted(0, movieList.size)
+        notifyDataSetChanged()
     }
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
