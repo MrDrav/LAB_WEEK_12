@@ -1,0 +1,84 @@
+LAB_WEEK_13 - ASSIGNMENT ANSWERS
+=================================
+
+1. Mengapa MVVM itu penting? File mana yang merepresentasikan Model, View, dan ViewModel?
+
+   MVVM (Model-View-ViewModel) penting karena:
+   - Memisahkan logika bisnis dari UI, sehingga kode lebih terorganisir dan mudah di-maintain
+   - Memungkinkan pengujian unit yang lebih mudah karena ViewModel tidak bergantung pada View
+   - Mendukung reaktivitas data melalui LiveData/StateFlow, sehingga UI otomatis terupdate saat data berubah
+   - Mengurangi boilerplate code dan mencegah memory leak dengan lifecycle-aware components
+
+   File yang merepresentasikan:
+   - Model: Movie.kt, PopularMoviesResponse.kt (data class yang merepresentasikan data)
+   - View: MainActivity.kt, DetailsActivity.kt, activity_main.xml, activity_details.xml (UI components)
+   - ViewModel: MovieViewModel.kt (mengelola state dan logika bisnis untuk View)
+
+
+2. Mengapa Data Binding lebih efisien daripada metode normal?
+
+   Data Binding lebih efisien karena:
+   - Mengurangi boilerplate code seperti findViewById() dan manual observer setup
+   - Menghubungkan data langsung ke layout XML, sehingga UI otomatis terupdate saat data berubah
+   - Mengurangi kemungkinan NullPointerException karena binding object dijamin type-safe
+   - Meningkatkan performa karena binding dilakukan pada compile-time, bukan runtime
+   - Memungkinkan two-way data binding untuk input forms
+   - Kode lebih bersih dan mudah dibaca karena logika binding ada di XML
+
+
+3. Mengapa Singleton Pattern penting dalam implementasi Database?
+
+   Singleton Pattern penting dalam Database karena:
+   - Mencegah multiple instance database yang bisa menyebabkan race condition dan data inconsistency
+   - Menghemat memori karena hanya ada satu instance database di seluruh aplikasi
+   - Menghindari overhead dari membuat koneksi database berulang kali
+   - Thread-safe dengan penggunaan synchronized block dan @Volatile annotation
+   - Memastikan semua bagian aplikasi mengakses sumber data yang sama
+   - Mempermudah dependency injection dan testing
+
+
+4. Mengapa Repository Pattern penting?
+
+   Repository Pattern penting karena:
+   - Menjadi single source of truth untuk data, menyembunyikan kompleksitas sumber data dari ViewModel
+   - Memisahkan logika akses data dari logika bisnis (separation of concerns)
+   - Memungkinkan offline-first strategy dengan mudah (cek lokal dulu, baru ke network)
+   - Mempermudah pengujian karena Repository bisa di-mock
+   - Memungkinkan pergantian sumber data (API, Database, Cache) tanpa mengubah ViewModel
+   - Menerapkan caching strategy yang konsisten di seluruh aplikasi
+   - Mengurangi duplikasi kode untuk operasi data
+
+
+5. Apakah ada cara lain untuk me-refresh database selain menggunakan Worker?
+
+   Ya, ada beberapa cara lain untuk me-refresh database:
+   
+   a) Pull-to-Refresh (SwipeRefreshLayout)
+      - User secara manual menarik layar ke bawah untuk refresh data
+      - Cocok untuk refresh on-demand
+   
+   b) AlarmManager
+      - Menjadwalkan task pada waktu tertentu
+      - Lebih presisi untuk waktu tertentu, tapi tidak battery-efficient
+   
+   c) Firebase Cloud Messaging (FCM) / Push Notification
+      - Server mengirim notifikasi ketika ada data baru
+      - Real-time updates tanpa polling
+   
+   d) JobScheduler (API 21+)
+      - Mirip WorkManager tapi lebih low-level
+      - WorkManager sebenarnya menggunakan JobScheduler di belakang layar
+   
+   e) Foreground Service
+      - Untuk sync yang memerlukan eksekusi berkelanjutan
+      - Menampilkan notifikasi selama proses berlangsung
+   
+   f) Kotlin Coroutines dengan delay/ticker
+      - Periodic refresh menggunakan coroutine loop
+      - Hanya berjalan saat aplikasi aktif
+   
+   WorkManager tetap menjadi pilihan terbaik untuk background sync karena:
+   - Battery-efficient
+   - Guaranteed execution
+   - Respects system constraints
+   - Backward compatible
